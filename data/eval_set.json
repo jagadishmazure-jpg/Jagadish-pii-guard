@@ -1,0 +1,176 @@
+[
+ {
+  "text": "Contact ann.lee@example.com about the refund.",
+  "spans": [
+   {
+    "entity": "EMAIL",
+    "value": "ann.lee@example.com"
+   }
+  ]
+ },
+ {
+  "text": "Card 4111 1111 1111 1111 was charged twice.",
+  "spans": [
+   {
+    "entity": "CARD",
+    "value": "4111 1111 1111 1111"
+   }
+  ]
+ },
+ {
+  "text": "Use card 5500-0000-0000-0004 for the test order.",
+  "spans": [
+   {
+    "entity": "CARD",
+    "value": "5500-0000-0000-0004"
+   }
+  ]
+ },
+ {
+  "text": "Order number 4111 1111 1111 1112 shipped today.",
+  "spans": []
+ },
+ {
+  "text": "Tracking ID 1234567890123 is in transit.",
+  "spans": []
+ },
+ {
+  "text": "My SSN is 123-45-6789, please update it.",
+  "spans": [
+   {
+    "entity": "SSN",
+    "value": "123-45-6789"
+   }
+  ]
+ },
+ {
+  "text": "Reference 000-12-3456 is a placeholder, not an SSN.",
+  "spans": []
+ },
+ {
+  "text": "Ticket 666-45-6789 was closed.",
+  "spans": []
+ },
+ {
+  "text": "Call me on (555) 014-2398 after 5pm.",
+  "spans": [
+   {
+    "entity": "PHONE",
+    "value": "(555) 014-2398"
+   }
+  ]
+ },
+ {
+  "text": "Office line +1 555 010 7781, ext 4.",
+  "spans": [
+   {
+    "entity": "PHONE",
+    "value": "+1 555 010 7781"
+   }
+  ]
+ },
+ {
+  "text": "Wire to GB82 WEST 1234 5698 7654 32 by Friday.",
+  "spans": [
+   {
+    "entity": "IBAN",
+    "value": "GB82 WEST 1234 5698 7654 32"
+   }
+  ]
+ },
+ {
+  "text": "Account code GB82 WEST 1234 5698 7654 33 is a typo.",
+  "spans": []
+ },
+ {
+  "text": "Aadhaar 2345 6789 0124 was submitted for KYC.",
+  "spans": [
+   {
+    "entity": "AADHAAR",
+    "value": "2345 6789 0124"
+   }
+  ]
+ },
+ {
+  "text": "ID 987654321012 verified.",
+  "spans": [
+   {
+    "entity": "AADHAAR",
+    "value": "987654321012"
+   }
+  ]
+ },
+ {
+  "text": "Invoice 234567890125 is unpaid.",
+  "spans": []
+ },
+ {
+  "text": "PAN ABCPE1234F is on the form.",
+  "spans": [
+   {
+    "entity": "PAN_IN",
+    "value": "ABCPE1234F"
+   }
+  ]
+ },
+ {
+  "text": "Code ABCDE1234F is a product SKU.",
+  "spans": []
+ },
+ {
+  "text": "Server 10.20.30.40 failed health checks.",
+  "spans": [
+   {
+    "entity": "IPV4",
+    "value": "10.20.30.40"
+   }
+  ]
+ },
+ {
+  "text": "Version 10.0.0.256 was released.",
+  "spans": []
+ },
+ {
+  "text": "Email bob@example.org or call 555-013-4477.",
+  "spans": [
+   {
+    "entity": "EMAIL",
+    "value": "bob@example.org"
+   },
+   {
+    "entity": "PHONE",
+    "value": "555-013-4477"
+   }
+  ]
+ },
+ {
+  "text": "Nothing sensitive here, just a meeting at 10:30 on 2026-10-17.",
+  "spans": []
+ },
+ {
+  "text": "Paid with 4012 8888 8888 1881 and emailed carol@example.net.",
+  "spans": [
+   {
+    "entity": "CARD",
+    "value": "4012 8888 8888 1881"
+   },
+   {
+    "entity": "EMAIL",
+    "value": "carol@example.net"
+   }
+  ]
+ },
+ {
+  "text": "SSN 078-05-1120 appears in old training material.",
+  "spans": [
+   {
+    "entity": "SSN",
+    "value": "078-05-1120"
+   }
+  ]
+ },
+ {
+  "text": "Build 2026.10.17.1 passed.",
+  "spans": []
+ }
+]

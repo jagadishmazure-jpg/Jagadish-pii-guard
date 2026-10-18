@@ -1,0 +1,32 @@
+[
+ {
+  "text": "Call 5550142398 tomorrow.",
+  "spans": [
+   {
+    "entity": "PHONE",
+    "value": "5550142398"
+   }
+  ],
+  "why": "phone with no separators is not matched (too easy to confuse with IDs)"
+ },
+ {
+  "text": "Write to ann at example dot com.",
+  "spans": [
+   {
+    "entity": "EMAIL",
+    "value": "ann at example dot com"
+   }
+  ],
+  "why": "obfuscated emails are not matched"
+ },
+ {
+  "text": "Patient Maria Gonzalez was discharged.",
+  "spans": [
+   {
+    "entity": "PERSON",
+    "value": "Maria Gonzalez"
+   }
+  ],
+  "why": "no name detection: needs an NER model (planned)"
+ }
+]
