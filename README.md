@@ -15,6 +15,7 @@
 
 - Detects 8 entity types (email, card, IBAN, Aadhaar, SSN, Indian PAN, phone, IPv4); each regex hit must pass a validator (Luhn, mod-97, Verhoeff, SSA rules, octet range) where one exists.
 - Real run on a 24-sentence labelled set (16 PII values): precision and recall 1.000 with validators; regex only drops to precision 0.652 with 8 false positives. The set is mine, so I treat this as a regression check.
+- Tokenization layer for stored data: keyed format-preserving tokens (card, SSN, phone) and a token vault (email). In a real run, a thief holding the encrypted store **and** its key recovered 0 of 12 sensitive values (12 of 12 without tokenization); joins on tokens matched joins on raw values; detokenization is role-gated and audited. See [docs/tokenization.md](docs/tokenization.md).
 - Three known misses are kept as tests on purpose (no-separator phones, obfuscated emails, names), so the limits are visible.
 
 ## Purpose
@@ -114,6 +115,27 @@ Known gaps (kept as failing cases on purpose): 3 of 3 missed
 ```
 <!-- /run -->
 
+## Tokenization layer
+
+Redaction handles text on its way out; tokenization handles values you must
+keep. Card, SSN and phone numbers become same-format tokens through a keyed
+Feistel cipher; emails get random tokens backed by a sealed vault. Tokens are
+deterministic, so tables still join. Rows are then stored encrypted, and the
+token key is kept apart from the storage key. Real run of
+`python examples/tokenization_demo.py` (theft section):
+
+```text
+attacker steals encrypted store + its key:
+  raw rows (control):  recovered 12/12 sensitive values, 12 PII-shaped spans
+  tokenized rows:      recovered 0/12 sensitive values, 5 PII-shaped spans
+```
+
+The 5 spans are tokens that look like an SSN or phone number, not real
+values. Measured latency (pure Python, 5,000 values): about 20 us median per
+vaultless tokenize or detokenize, about 11 us per vault detokenize. Full
+write-up, guardrails, limits and adopter guide:
+[docs/tokenization.md](docs/tokenization.md).
+
 ## How to run
 
 ```bash
@@ -129,7 +151,7 @@ Test suite size (real collection, re-checked in CI):
 
 <!-- run: python scripts/count_tests.py -->
 ```text
-33 tests collected
+52 tests collected
 ```
 <!-- /run -->
 
@@ -155,6 +177,9 @@ Test suite size (real collection, re-checked in CI):
 | label, mask and keyed pseudonymise modes | Built | `piiguard/redact.py` |
 | Per-entity precision/recall with validators on and off | Built | `piiguard/evaluate.py`, `data/eval_set.json` |
 | Known-gap tests | Built | `data/known_gaps.json` |
+| Vaultless FPE tokens, token vault, role-gated audited detokenization | Built | `piiguard/tokenization.py` |
+| Encrypted store (teaching cipher) and store+key theft test | Built | `piiguard/sealed_store.py`, `tests/test_tokenization.py` |
+| Certified FF1 / AES-GCM, key rotation, persistent vault | Planned | docs/tokenization.md |
 | NER for names and addresses | Planned | docs/implementation-guide.md |
 | Larger, externally sourced eval set | Planned | not started |
 
@@ -166,6 +191,9 @@ Test suite size (real collection, re-checked in CI):
 | Pseudonyms reversed by hashing candidate values | Keyed HMAC, key from env, fail closed | Built |
 | Look-alike numbers redacted, breaking the answer | Validators drop invalid candidates | Built |
 | Names and addresses leak | Needs NER; listed as a known gap | Planned |
+| Database and its encryption key both stolen | Fields tokenized with a separate token key; 0/12 values recovered in test | Built |
+| Insider detokenizes without need | Role policy, deny by default, audit log with fingerprints only | Built |
+| Token key stolen | Separate key service; rotation | Planned |
 | Key leaked from config | Key Vault and managed identity | Planned |
 
 ## Interview points
@@ -194,6 +222,7 @@ run; it is a plan.
 ## Documentation
 
 - [Entities, validators and modes](docs/entities.md)
+- [Tokenization layer](docs/tokenization.md) and [ADR 0001](docs/adr/0001-tokenization.md)
 - [Implementation guide (Azure)](docs/implementation-guide.md)
 - [Interview points](docs/interview-points.md)
 - [Security policy](SECURITY.md)
@@ -206,8 +235,12 @@ piiguard/
   detectors.py   regex + validator + priority, overlap resolution
   redact.py      label, mask, keyed pseudonymise
   evaluate.py    precision/recall on the labelled set
+  tokenization.py vaultless FPE, token vault, role-gated detokenizer
+  sealed_store.py encrypt-then-MAC record store (teaching cipher)
 data/            eval_set.json, known_gaps.json
 examples/demo.py the run shown above
+examples/tokenization_demo.py  joins, theft test, RBAC
+scripts/bench_tokenization.py  latency
 tests/           offline pytest suite
 ```
 
