@@ -39,3 +39,7 @@ def test_blocklist_is_stored_as_hashes_only():
     for s in (*cb.TERM_HASHES, *cb.SPELLING_HASHES):
         assert re.fullmatch(r"[0-9a-f]{64}", s)
     assert len(cb.SPELLING_HASHES) >= len(cb.TERM_HASHES) > 0
+
+
+def test_blocklist_is_not_empty():
+    assert len(cb.TERM_HASHES) >= 10 and len(cb.SPELLING_HASHES) >= 10

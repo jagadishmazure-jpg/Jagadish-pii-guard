@@ -27,6 +27,8 @@ SKIP = {"scripts/check_brands.py"}
 TEXT = re.compile(r"\.(py|md|txt|json|ya?ml|toml|csv|sql|html|ts|js)$")
 
 TERM_HASHES = frozenset({
+    "916a98f0fa2a39af1a736b1a3744cb655dc8638a6953e2fb13e39934ab60d55a",
+    "67b51232d90eef075f44549519a721f50e31cfe58c93c9c30132291aac942601",
     "03f5ed581c44e3cf7672849ca3a6f6bbd3992f988aaf0735fac25d72fc7cacf3",
     "04c2998f3d458c7724f8f3dde10dd431b4f2103e71db8b1e39aa2093f5c32e54",
     "0616a267820d2c788f95dd9d06427dfa90f3b3e776c2687b63a322aa359ee1e6",
@@ -101,6 +103,8 @@ TERM_HASHES = frozenset({
 })
 
 SPELLING_HASHES = frozenset({
+    "973a4a818d799636d44525dfac347ef440bc67f5e33c404d7824a784465abead",
+    "cf480cbb7a87b6d3440e2a068ee6a57592e14188a6cb9d8c3ac90803aa054e1c",
     "04ace81129308b95f284d1960ac959c718cf1506f5e915d20970e16798d31ae0",
     "06fec48a171515f60ea99fdd762d76fe790fd90b424e7149c7416e6b8ebb5923",
     "0760d36d82f6c5ec7490021b0903b78a97c6c914d56bd681dc1814396c9472e6",
